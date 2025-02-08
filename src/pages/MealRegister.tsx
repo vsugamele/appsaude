@@ -1,70 +1,64 @@
 import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
 import MealAnalysis from '../components/MealAnalysis';
 import MealHistory from '../components/MealHistory';
 
-interface Meal {
+interface MealData {
   id: string;
-  date: Date;
-  image: string;
-  analysis: {
-    calories: number;
-    nutrients: {
-      protein: number;
-      carbs: number;
-      fat: number;
-    };
-    recommendations: string[];
-  };
+  name: string;
+  description: string;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+  date: string;
+  time: string;
 }
 
 const MealRegister: React.FC = () => {
-  const [meals, setMeals] = useState<Meal[]>([]);
+  const navigate = useNavigate();
+  const [meals, setMeals] = useState<MealData[]>([]);
 
-  const handleAnalysisComplete = (analysis: any, imageData: string) => {
-    const newMeal: Meal = {
+  const handleAnalysisComplete = (analysis: { calories: number; protein: number; carbs: number; fat: number }) => {
+    const newMeal: MealData = {
       id: Date.now().toString(),
-      date: new Date(),
-      image: imageData,
-      analysis
+      name: 'Nova Refeição',
+      description: '',
+      ...analysis,
+      date: new Date().toISOString().split('T')[0],
+      time: new Date().toLocaleTimeString()
     };
-
-    setMeals(prevMeals => [newMeal, ...prevMeals]);
+    setMeals(prev => [...prev, newMeal]);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-green-600 text-white">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center">
-            <Link to="/" className="mr-4">
-              <ArrowLeftIcon className="h-6 w-6" />
-            </Link>
-            <h1 className="text-xl font-semibold">Registrar Refeição</h1>
-          </div>
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <div className="flex items-center mb-6">
+          <Link to="/" className="mr-4">
+            <ArrowLeftIcon className="h-6 w-6 text-gray-600 hover:text-gray-800" />
+          </Link>
+          <h1 className="text-2xl font-bold">Registro de Refeições</h1>
         </div>
-      </header>
 
-      {/* Conteúdo principal */}
-      <main className="container mx-auto px-4 py-6">
-        <div className="max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Seção de histórico */}
+          <section>
+            <h2 className="text-xl font-semibold mb-4">Histórico</h2>
+            <MealHistory meals={meals} />
+          </section>
+
           {/* Componente de análise de refeição */}
           <section className="mb-8">
             <MealAnalysis
-              onAnalysisComplete={(analysis, imageData) => 
-                handleAnalysisComplete(analysis, imageData)
+              onAnalysisComplete={(analysis) => 
+                handleAnalysisComplete(analysis)
               }
             />
           </section>
-
-          {/* Histórico de refeições */}
-          <section>
-            <MealHistory meals={meals} />
-          </section>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

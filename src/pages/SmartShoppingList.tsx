@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeftIcon, PlusIcon, MinusIcon, CheckIcon, PrinterIcon, ShareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { MealPlan } from '../components/MealPlan'
-import { FormData } from './Profile'
+import { FormData } from '../types/FormData'; // Corrigido aqui
 
 interface NutritionalInfo {
   calories: number;  // por 100g

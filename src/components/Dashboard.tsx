@@ -1,5 +1,12 @@
 import React from 'react';
-import { ArrowUpIcon, TrophyIcon, FireIcon, BeakerIcon, FootprintsIcon } from '@heroicons/react/24/outline';
+import {
+  ArrowUpIcon,
+  TrophyIcon,
+  FireIcon,
+  BeakerIcon,
+  ClipboardDocumentIcon,
+  ClipboardDocumentCheckIcon
+} from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
 
 interface DashboardProps {
@@ -131,7 +138,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           transition={{ type: "spring", stiffness: 300 }}
         >
           <div className="flex items-center mb-3">
-            <FootprintsIcon className="h-6 w-6 text-green-500" />
+            <ClipboardDocumentCheckIcon className="h-6 w-6 text-green-500" />
             <h3 className="text-lg font-semibold ml-2">Passos</h3>
           </div>
           <div className="relative pt-1">
@@ -208,7 +215,7 @@ const Dashboard: React.FC<DashboardProps> = ({
               {rec.priority === 'high' && <span className="text-red-500 mr-2">⚠️</span>}
               {rec.type === 'water' && <BeakerIcon className="h-5 w-5 text-blue-500 mr-2" />}
               {rec.type === 'food' && <FireIcon className="h-5 w-5 text-orange-500 mr-2" />}
-              {rec.type === 'exercise' && <FootprintsIcon className="h-5 w-5 text-green-500 mr-2" />}
+              {rec.type === 'exercise' && <ClipboardDocumentCheckIcon className="h-5 w-5 text-green-500 mr-2" />}
               <p className={`text-sm ${
                 rec.priority === 'high' ? 'text-red-700' :
                 rec.priority === 'medium' ? 'text-yellow-700' :
@@ -237,7 +244,7 @@ const Dashboard: React.FC<DashboardProps> = ({
             <span className="text-xs mt-1">Conquistas</span>
           </button>
           <button className="flex flex-col items-center text-gray-600">
-            <FootprintsIcon className="h-6 w-6" />
+            <ClipboardDocumentCheckIcon className="h-6 w-6" />
             <span className="text-xs mt-1">Exercícios</span>
           </button>
         </div>

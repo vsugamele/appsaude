@@ -2,33 +2,30 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ChartBarIcon, ClockIcon } from '@heroicons/react/24/outline';
 
-interface Meal {
+interface MealData {
   id: string;
-  date: Date;
-  image: string;
-  analysis: {
-    calories: number;
-    nutrients: {
-      protein: number;
-      carbs: number;
-      fat: number;
-    };
-    recommendations: string[];
-  };
+  name: string;
+  description: string;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+  date: string;
+  time: string;
 }
 
 interface MealHistoryProps {
-  meals: Meal[];
+  meals: MealData[];
 }
 
 const MealHistory: React.FC<MealHistoryProps> = ({ meals }) => {
-  const formatDate = (date: Date) => {
+  const formatDate = (date: string) => {
     return new Intl.DateTimeFormat('pt-BR', {
       day: '2-digit',
       month: '2-digit',
       hour: '2-digit',
       minute: '2-digit'
-    }).format(date);
+    }).format(new Date(date));
   };
 
   return (
@@ -55,7 +52,7 @@ const MealHistory: React.FC<MealHistoryProps> = ({ meals }) => {
                 <div className="flex items-center space-x-2">
                   <ChartBarIcon className="h-5 w-5 text-green-500" />
                   <span className="font-medium text-green-600">
-                    {meal.analysis.calories} kcal
+                    {meal.calories} kcal
                   </span>
                 </div>
               </div>
@@ -65,11 +62,11 @@ const MealHistory: React.FC<MealHistoryProps> = ({ meals }) => {
             <div className="flex flex-col md:flex-row">
               {/* Imagem da refeição */}
               <div className="w-full md:w-1/3">
-                <img
+                {/* <img
                   src={meal.image}
                   alt="Refeição"
                   className="w-full h-48 object-cover"
-                />
+                /> */}
               </div>
 
               {/* Análise nutricional */}
@@ -81,7 +78,7 @@ const MealHistory: React.FC<MealHistoryProps> = ({ meals }) => {
                       Proteínas
                     </div>
                     <div className="mt-1 text-lg font-semibold text-gray-900">
-                      {meal.analysis.nutrients.protein}g
+                      {meal.protein}g
                     </div>
                   </div>
                   <div className="text-center">
@@ -89,7 +86,7 @@ const MealHistory: React.FC<MealHistoryProps> = ({ meals }) => {
                       Carboidratos
                     </div>
                     <div className="mt-1 text-lg font-semibold text-gray-900">
-                      {meal.analysis.nutrients.carbs}g
+                      {meal.carbs}g
                     </div>
                   </div>
                   <div className="text-center">
@@ -97,13 +94,13 @@ const MealHistory: React.FC<MealHistoryProps> = ({ meals }) => {
                       Gorduras
                     </div>
                     <div className="mt-1 text-lg font-semibold text-gray-900">
-                      {meal.analysis.nutrients.fat}g
+                      {meal.fat}g
                     </div>
                   </div>
                 </div>
 
                 {/* Recomendações */}
-                <div className="mt-4">
+                {/* <div className="mt-4">
                   <h4 className="text-sm font-medium text-gray-900 mb-2">
                     Recomendações
                   </h4>
@@ -118,7 +115,7 @@ const MealHistory: React.FC<MealHistoryProps> = ({ meals }) => {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div> */}
               </div>
             </div>
           </motion.div>
