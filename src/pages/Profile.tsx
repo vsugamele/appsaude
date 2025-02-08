@@ -215,6 +215,7 @@ export default function Profile() {
             <BodyMeasurements
               measurements={formData.measurements}
               onChange={handleMeasurementsChange}
+              gender={formData.gender as 'male' | 'female'}
             />
           </section>
 

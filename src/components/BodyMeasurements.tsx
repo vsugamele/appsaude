@@ -1,19 +1,13 @@
 import React from 'react';
+import { FormData } from '../types/FormData';
 
 interface BodyMeasurementsProps {
-  measurements: {
-    chest: string;
-    thigh: string;
-    calf: string;
-    abdomen: string;
-    waist: string;
-    hip: string;
-    bodyFat: string;
-  };
+  measurements: FormData['measurements'];
+  onChange: (measurements: FormData['measurements']) => void;
   gender: 'male' | 'female';
 }
 
-const BodyMeasurements: React.FC<BodyMeasurementsProps> = ({ measurements, gender }) => {
+const BodyMeasurements: React.FC<BodyMeasurementsProps> = ({ measurements, onChange, gender }) => {
   const chest = parseFloat(measurements.chest) || 0;
   const thigh = parseFloat(measurements.thigh) || 0;
   const calf = parseFloat(measurements.calf) || 0;
@@ -21,6 +15,13 @@ const BodyMeasurements: React.FC<BodyMeasurementsProps> = ({ measurements, gende
   const abdomen = parseFloat(measurements.abdomen) || 0;
   const hip = parseFloat(measurements.hip) || 0;
   const bodyFat = parseFloat(measurements.bodyFat) || 0;
+
+  const handleInputChange = (field: keyof FormData['measurements'], value: string) => {
+    onChange({
+      ...measurements,
+      [field]: value
+    });
+  };
 
   // Funções para avaliar as medidas
   const getAbdomenStatus = (value: number): 'good' | 'moderate' | 'bad' => {
@@ -179,6 +180,99 @@ const BodyMeasurements: React.FC<BodyMeasurementsProps> = ({ measurements, gende
       </div>
       <div className="text-center text-xs text-gray-500 mt-1">
         Baseado nas diretrizes da OMS
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Circunferência Torácica (cm)
+          </label>
+          <input
+            type="number"
+            value={measurements.chest}
+            onChange={(e) => handleInputChange('chest', e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+            placeholder="0"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Circunferência da Coxa (cm)
+          </label>
+          <input
+            type="number"
+            value={measurements.thigh}
+            onChange={(e) => handleInputChange('thigh', e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+            placeholder="0"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Circunferência da Panturrilha (cm)
+          </label>
+          <input
+            type="number"
+            value={measurements.calf}
+            onChange={(e) => handleInputChange('calf', e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+            placeholder="0"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Circunferência Abdominal (cm)
+          </label>
+          <input
+            type="number"
+            value={measurements.abdomen}
+            onChange={(e) => handleInputChange('abdomen', e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+            placeholder="0"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Circunferência da Cintura (cm)
+          </label>
+          <input
+            type="number"
+            value={measurements.waist}
+            onChange={(e) => handleInputChange('waist', e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+            placeholder="0"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Circunferência do Quadril (cm)
+          </label>
+          <input
+            type="number"
+            value={measurements.hip}
+            onChange={(e) => handleInputChange('hip', e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+            placeholder="0"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Percentual de Gordura (%)
+          </label>
+          <input
+            type="number"
+            value={measurements.bodyFat}
+            onChange={(e) => handleInputChange('bodyFat', e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+            placeholder="0"
+          />
+        </div>
       </div>
     </div>
   );
